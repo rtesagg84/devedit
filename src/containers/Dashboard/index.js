@@ -12,28 +12,31 @@ import { withFirebase } from "../../components/Firebase";
 import ListItems from "../../components/ListItems";
 import Create_article from '../Create-article'
 class Dashboard extends React.Component {
-  constructor(props) {
-    super(props);
+    constructor(props) {
+        super(props);
 
-    this.state = {
-      articles: []
-    };
-  }
-  componentDidMount() {
-    // let articles =this.props.firebase.articles()
-    this.unsubscribe = this.props.firebase.articles().onSnapshot(snapshot => {
-      let articles = [];
-      snapshot.forEach(doc => articles.push({ ...doc.data(), uid: doc.id }));
-
-      console.log("Articles loaded here yo!", articles);
-      this.setState({ articles });
-    });
-  }
-
-  componentWillUnmount() {
-    this.unsubscribe();
-  }
-
+        this.state = {
+            articles: [],
+           
+        };
+    }
+        componentDidMount() {
+            // let articles =this.props.firebase.articles()
+            this.unsubscribe = this.props.firebase.articles().onSnapshot(snapshot => {
+                let articles = [];
+                snapshot.forEach(doc => articles.push({
+                    ...doc.data(), uid: doc.id}));
+                console.log("Articles loaded here yo!", articles);
+                this.setState({ articles })
+            });
+        }
+    
+    componentWillUnmount() {
+        this.unsubscribe();
+       /* if (this.state.article == 10) {
+            this.state.article = true
+        }*/
+    }
   render() {
     return (
       <div className="wrapper">
@@ -52,16 +55,20 @@ class Dashboard extends React.Component {
           onClick={() => {
             this.props.firebase
               .article("3BkKXYRVLMNSbupu04zC")
-              .set({ title: "Live TEST" });
+                .set({ title: "Live TEST" })
+                    
           }}
         >
           Edit Post
         </button>
         <button
           onClick={() => {
-            this.props.firebase
-              .articles()
-              .add({ title: "Live TEST2" });
+                    this.props.firebase
+                        .articles()
+                        .add({
+                            title: "Live TEST2",
+                            
+                        })
           }}
         >
           New Post
@@ -73,7 +80,8 @@ class Dashboard extends React.Component {
           <ListItems
             articles={this.state.articles}
             //recipes={this.state.recipes}
-          />
+                />
+                
         </div>
       </div>
     );
